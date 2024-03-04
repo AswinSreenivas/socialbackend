@@ -75,8 +75,12 @@ WSGI_APPLICATION = 'social_media_scheduler.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'smsbackend1',
+        'USER': 'postgres',
+        'PASSWORD': '1234',
+        'HOST': 'localhost',  # Or the IP address of your PostgreSQL server
+        'PORT': '5432',        # Or the port your PostgreSQL server is listening on
     }
 }
 
