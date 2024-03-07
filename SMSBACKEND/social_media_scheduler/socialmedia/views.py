@@ -47,12 +47,41 @@ class PostSocialMediaView(APIView):
         except Exception as e:
             return handle_errors(e)
 
-def post_to_facebook(content, access_token):
-    # Replace with actual implementation using Facebook SDK
-    # ... (Use Facebook SDK functions to authenticate, prepare data, and make API calls)
-    # ... (Handle errors and return appropriate response)
+from facebook import GraphAPI
 
-# ... (Define similar functions for other platforms with their respective libraries)
+def post_to_facebook(content, access_token):
+  """
+  Posts the given content to Facebook using the provided access token.
+
+  Args:
+      content (str): The content to be posted (text, image URL, etc.).
+      access_token (str): The Facebook user's access token for posting.
+
+  Returns:
+      dict: A dictionary containing the response data from the Facebook API,
+          or None if an error occurs.
+
+  Raises:
+      Exception: If an error occurs during the API call.
+  """
+
+  # Use the Facebook SDK to create a GraphAPI object
+  graph = GraphAPI(access_token=access_token)
+
+  # Prepare the post data based on content type (text, image, etc.)
+  post_data = {
+      "message": content,  # Replace with appropriate field for your content type
+  }
+
+  try:
+    # Make the API call to post the content
+    response = graph.post("/me/feed", data=post_data)
+    return response
+
+  except Exception as e:
+    # Handle errors appropriately (logging, returning error messages)
+    raise Exception(f"An error occurred while posting to Facebook: {str(e)}")
+
 
 class GetSocialMediaAnalyticsView(APIView):
     permission_classes = [IsAuthenticated]
